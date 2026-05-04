@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import DatePicker from "@/components/DatePicker";
 import TaskList from "@/components/TaskList";
 import AddTaskBar from "@/components/AddTaskBar";
+import AppLogo from "@/components/AppLogo";
 
 interface Task {
   id: string;
@@ -59,7 +60,10 @@ const TaskOverview = () => {
     >
       <ScrollView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>Today</Text>
+          <View style={styles.headerRow}>
+            <Text style={styles.title}>Today</Text>
+            <AppLogo size={48} />
+          </View>
         </View>
 
         <View style={styles.section}>
@@ -84,6 +88,11 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     marginTop: 20,
   },
+  headerRow: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+},
   title: {
     fontSize: 32,
     fontWeight: "bold",
