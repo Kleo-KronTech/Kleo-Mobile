@@ -35,6 +35,8 @@ const categoryIcons: Record<Category, string> = {
   other: "category",
 };
 
+const API_URL = "http://192.168.1.137:3000";
+
 const CreateTask = () => {
   const { taskText } = useLocalSearchParams();
 
@@ -63,21 +65,61 @@ const CreateTask = () => {
     "other",
   ];
 
-  const handleCreateTask = () => {
-    if (taskName.trim()) {
-      console.log({
-        taskName,
-        date: selectedDate,
-        time: `${hours}:${minutes}:${seconds} ${period}`,
-        category: selectedCategory,
+  const handleCreateTask = async () => {
+    if (!taskName.trim()) return;
+
+    try {
+      let hour24 = parseInt(hours, 10);
+
+      if (period === "PM" && hour24 !== 12) {
+        hour24 += 12;
+      }
+
+      if (period === "AM" && hour24 === 12) {
+        hour24 = 0;
+      }
+
+      // create FULL datetime
+      const reminderDate = new Date(
+        2026,
+        4,
+        selectedDate,
+        hour24,
+        parseInt(minutes, 10),
+        parseInt(seconds, 10),
+      );
+
+      console.log("Sending date:", reminderDate);
+
+      const response = await fetch(`${API_URL}/reminders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: taskName,
+          reminderDate: reminderDate.toISOString(),
+          category: selectedCategory,
+          repeatDays: [],
+        }),
       });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to create reminder");
+      }
+
+      console.log("Reminder created:", result);
+
+      setTaskName("");
+    } catch (error) {
+      console.error("Create reminder error:", error);
     }
   };
 
- 
   return (
     <ScrollView style={styles.container}>
-    
       <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>Create new task</Text>
         <TouchableOpacity style={styles.plusButton}>
@@ -95,7 +137,6 @@ const CreateTask = () => {
         />
       </View>
 
-      
       <DatePicker selectedDate={selectedDate} onSelectDate={setSelectedDate} />
 
       <TimePicker
@@ -109,7 +150,6 @@ const CreateTask = () => {
         onPeriodChange={setPeriod}
       />
 
-    
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Category</Text>
 
@@ -303,7 +343,7 @@ const styles = StyleSheet.create({
     color: "#000",
     marginBottom: 4,
   },
- 
+
   categoryTitle: {
     fontSize: 12,
     fontWeight: "600",
