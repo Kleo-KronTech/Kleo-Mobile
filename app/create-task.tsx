@@ -35,7 +35,7 @@ const categoryIcons: Record<Category, string> = {
   other: "category",
 };
 
-const API_URL = "http://192.168.1.137:3000";
+const API_URL = `${process.env.EXPO_PUBLIC_API_URL}/reminders`;
 
 const CreateTask = () => {
   const { taskText } = useLocalSearchParams();
@@ -91,7 +91,7 @@ const CreateTask = () => {
 
       console.log("Sending date:", reminderDate);
 
-      const response = await fetch(`${API_URL}/reminders`, {
+      const response = await fetch(`${API_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
