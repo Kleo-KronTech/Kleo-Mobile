@@ -22,17 +22,17 @@ const TimePicker = ({
   onHoursChange, onMinutesChange, onSecondsChange, onPeriodChange,
 }: TimePickerProps) => {
   
-  // Helper to render each picker to keep code clean
+  
   const renderPicker = (data: string[], value: string, onChange: (val: string) => void, width: number) => {
-    // We group the props that TypeScript is complaining about here
+    
     const pickerProps: any = {
-      key: value, // Ensure the picker re-renders when value changes
+     
       selectedIndex: data.indexOf(value),
       items: data.map(item => ({ label: item, value: item })),
       onChange: ({ item }: any) => onChange(item.value),
       height: 150,
       width: width,
-      itemHeight: 45, // Necessary for alignment
+      itemHeight: 45, 
       itemTextStyle: {
       fontSize: 18,
       color: "#999",
@@ -43,7 +43,7 @@ const TimePicker = ({
       color: "#5E54B8",
     },
       selectedIndicatorStyle: styles.selectedIndicator,
-      haptics: true, // The bar in the middle
+      haptics: true, 
     };
 
     return <WheelPicker {...pickerProps} />;
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     height: 150,
     justifyContent: 'center',
-    overflow: 'hidden', // Ensures the selected indicator doesn't overflow
+    overflow: 'hidden', 
   },
   timeColon: {
     fontSize: 22,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   selectedIndicator: {
     backgroundColor: 'rgba(94, 84, 184, 0.1)',
     borderRadius: 8,
-    borderWidth: 0, // Removes default lines if they exist
+    borderWidth: 0, 
     height: 45,
   },
 });
