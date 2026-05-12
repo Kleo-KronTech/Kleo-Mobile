@@ -53,7 +53,6 @@ const MessagesPage = () => {
     <View style={styles.outerContainer}>
       <ScrollView style={styles.container}>
 
-        {/* Header */}
         <View style={styles.header}>
           <View style={styles.headerRow}>
             <Text style={styles.title}>Messages</Text>
@@ -62,7 +61,6 @@ const MessagesPage = () => {
           <Text style={styles.subtitle}>From your caretaker</Text>
         </View>
 
-        {/* Content */}
         {loading ? (
           <View style={styles.centered}>
             <ActivityIndicator size="large" color="#5e54b8" />

@@ -182,8 +182,12 @@ const CreateTask = () => {
         </TouchableOpacity>
 
         {dropdownOpen && (
-          <View style={styles.dropdownMenu}>
-            {categories.map((category, index) => (
+  <View style={styles.dropdownMenu}>
+    <ScrollView
+      nestedScrollEnabled
+      showsVerticalScrollIndicator={false}
+    >
+      {categories.map((category, index) => (
               <TouchableOpacity
                 key={category}
                 style={[
@@ -197,6 +201,7 @@ const CreateTask = () => {
                 }}
                 activeOpacity={0.7}
               >
+                
                 <View
                   style={[
                     styles.dropdownItemIcon,
@@ -224,14 +229,17 @@ const CreateTask = () => {
                 )}
               </TouchableOpacity>
             ))}
+               </ScrollView>
           </View>
         )}
+        
       </View>
 
       <TouchableOpacity style={styles.createButton} onPress={handleCreateTask}>
         <Text style={styles.createButtonText}>Create Task</Text>
       </TouchableOpacity>
     </ScrollView>
+    
   );
 };
 
@@ -310,7 +318,7 @@ const styles = StyleSheet.create({
   dayNumberSelected: {
     color: "#fff",
   },
-  // Time Picker
+ 
   timePicker: {
     flexDirection: "row",
     alignItems: "center",
@@ -381,14 +389,15 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   dropdownMenu: {
-    backgroundColor: "#fff",
-    borderWidth: 2,
-    borderColor: "#5e54b8",
-    borderTopWidth: 0,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    overflow: "hidden",
-  },
+  backgroundColor: "#fff",
+  borderWidth: 2,
+  borderColor: "#5e54b8",
+  borderTopWidth: 0,
+  borderBottomLeftRadius: 10,
+  borderBottomRightRadius: 10,
+  overflow: "hidden",
+  maxHeight: 100,
+},
   dropdownItem: {
     flexDirection: "row",
     alignItems: "center",
